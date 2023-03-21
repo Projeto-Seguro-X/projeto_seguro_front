@@ -1,13 +1,19 @@
 import { Button, Grid, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { Box } from '@mui/material';
-import React, {ChangeEvent, useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, {ChangeEvent, useState, useEffect} from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import UserLogin from '../../models/UserLogin';
+import useLocalStorage from 'react-use-localstorage';
+import { login } from '../../services/Service';
 
 
 
 function Login (){
+
+    let history = useHistory();
+
+    const[token, setToken] = useLocalStorage('token');
 
     const [userLogin, setUserLogin] = useState<UserLogin>(
         {
@@ -25,10 +31,24 @@ function Login (){
             })
         }
 
+        useEffect(() =>{
+            if(token !== ''){
+                history.push('/home')
+            }
+        }, [token])
+
         async function onSubmit(e:ChangeEvent<HTMLFormElement>){
             e.preventDefault();
+            try {
+                const resposta = await api.post(`/usuarios/logar`, userLogin)
+                setToken(resposta.data.token)
 
-            console.log('userLogin:' + userLogin);
+                alert('Usuário logado com sucesso!');
+            } catch (error) {
+                alert('Dados do usuários inconsistentes. Erro ao logar!');
+            }
+
+           
         }
 
     return(
@@ -40,11 +60,9 @@ function Login (){
                         <TextField value={userLogin.usuario} onChange={(e:ChangeEvent<HTMLInputElement>) => updateModel(e)} id='usuario' label='usuario' variant='outlined' name='usuario' margin='normal' fullWidth/>
                         <TextField value={userLogin.senha}  onChange={(e:ChangeEvent<HTMLInputElement>) => updateModel(e)} id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='passaword' fullWidth/>
                         <Box marginTop={2} textAlign='center'>
-                            <Link to='/home' className='text-decorator-none'>
                                 <Button type='submit' variant='contained' color='primary'>
                                     Logar
                                 </Button>
-                            </Link>
                         </Box>
                     </form>
                     <Box display='flex' justifyContent='center' marginTop={2}>
