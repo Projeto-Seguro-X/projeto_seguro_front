@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { Box } from '@mui/material';
 import React, {ChangeEvent, useState, useEffect} from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import UserLogin from '../../models/UserLogin';
+import UserLogin from '../../models/User';
 import useLocalStorage from 'react-use-localstorage';
 import { login } from '../../services/Service';
 
@@ -40,8 +40,7 @@ function Login (){
         async function onSubmit(e:ChangeEvent<HTMLFormElement>){
             e.preventDefault();
             try {
-                const resposta = await api.post(`/usuarios/logar`, userLogin)
-                setToken(resposta.data.token)
+                await login(`/usuarios/logar`, userLogin, setToken)
 
                 alert('Usuário logado com sucesso!');
             } catch (error) {
