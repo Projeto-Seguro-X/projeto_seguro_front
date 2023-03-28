@@ -18,29 +18,29 @@ function Navbar (){
             <Box mx={1} className='cursor'>
               <Link to='/home'>
               <Typography variant="h6" color="inherit">
-                home
+                Home
               </Typography>
               </Link>
             </Box>
             <Box mx={1} className='cursor'>
               <Typography variant="h6" color="inherit">
-                postagens
+              Criar Cotação
               </Typography>
             </Box>
             <Box mx={1} className='cursor'>
               <Typography variant="h6" color="inherit">
-                temas
+              Lista de Cotações
               </Typography>
             </Box>
             <Box mx={1} className='cursor'>
               <Typography variant="h6" color="inherit">
-                cadastrar tema
+              Lista de Apolices
               </Typography>
             </Box>
             <Box mx={1} className='cursor'>
               <Link to='/login' className="text-decorator-none">
                 <Typography variant="h6" color="inherit">
-                  logout
+                  Sair
                 </Typography>
               
               </Link>
